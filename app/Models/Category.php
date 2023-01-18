@@ -9,4 +9,8 @@ class Category extends Model
 {
     use HasFactory;
     protected $guarded=['id'];
+    public function words()
+    {
+        return $this->hasMany(Word::class);
+    }
 }

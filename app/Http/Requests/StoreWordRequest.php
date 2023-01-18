@@ -13,7 +13,7 @@ class StoreWordRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,11 @@ class StoreWordRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'category_id'=>'integer',
+            'latin'=>'required|unique:words,latin',
+            'kiril'=>'required|unique:words,kiril',
+            'description'=>'required',
+            'audio'=> 'nullable|mimes:ogg|max:10000'
         ];
     }
 }

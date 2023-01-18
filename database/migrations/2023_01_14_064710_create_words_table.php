@@ -19,10 +19,11 @@ class CreateWordsTable extends Migration
         Schema::create('words', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Category::class)->constrained();
-            $table->text('name');
+            $table->text('latin');
+            $table->text('kiril');
             $table->text('description');
-            $table->integer('count');
-            $table->text('audio');
+            $table->integer('count')->default(0);
+            $table->text('audio')->nullable();
             $table->timestamps();
         });
     }

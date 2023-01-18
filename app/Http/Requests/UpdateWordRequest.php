@@ -13,7 +13,7 @@ class UpdateWordRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,11 @@ class UpdateWordRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'category_id'=>'integer',
+            'latin'=>'required',
+            'kiril'=>'required',
+            'description'=>'required',
+            'audio'=> 'mimes:ogg|required|max:10000'
         ];
     }
 }

@@ -24,8 +24,8 @@ class UpdateLetterRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
-            'upper' => 'required',
+            'latin' => 'required',
+            'kiril' => 'required',
         ];
     }
 }

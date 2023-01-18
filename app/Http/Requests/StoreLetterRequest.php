@@ -24,8 +24,8 @@ class StoreLetterRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required||unique:letters,name',
-            'upper' => 'required||unique:letters,name',
+            'kiril' =>'required||unique:letters,kiril',
+            'latin' => 'required||unique:letters,latin',
         ];
     }
 }

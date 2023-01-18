@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\api\admin\AuthController;
+use App\Http\Controllers\api\admin\CategoryController;
 use App\Http\Controllers\api\admin\LetterController;
 use App\Http\Controllers\api\admin\UserController;
+use App\Http\Controllers\api\admin\WordController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,14 +19,34 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+
+Route::get('categories',[CategoryController::class,'index']);
+Route::get('categories/{id}',[CategoryController::class,'show']);
+
+Route::get('words',[WordController::class,'index']);
+Route::get('words/{id}',[WordController::class,'show']);
+
 Route::post('authenticate',[AuthController::class,'authenticate']);
 
 Route::middleware('auth:sanctum')->group(function(){
+
+//auth    
 Route::post('logout',[AuthController::class,'logout']);
 Route::get('check',[AuthController::class,'check']);
 
-Route::apiResource('letter',LetterController::class);
+//categories
+Route::post('categories',[CategoryController::class,'store']);
+Route::put('categories/{id}',[CategoryController::class,'update']);
+Route::delete('categories/{id}',[CategoryController::class,'destroy']);
+
+//Word
+Route::post('words',[WordController::class,'store']);
+Route::put('words/{id}',[WordController::class,'update']);
+Route::delete('words/{id}',[WordController::class,'destroy']);
+
 });
+

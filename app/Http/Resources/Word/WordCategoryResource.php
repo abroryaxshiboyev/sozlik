@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Word;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class LetterResource extends JsonResource
+class WordCategoryResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,8 +16,8 @@ class LetterResource extends JsonResource
     {
         return [
             'id'=>$this->id,
-            'name'=>$this->name,
-            'upper'=>$this->upper,
+            'latin'=>$this->latin,
+            'kiril'=>$this->kiril,
         ];
     }
 }
