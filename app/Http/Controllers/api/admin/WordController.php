@@ -22,13 +22,23 @@ class WordController extends Controller
     {
         $query = Word::query();
 
-        if ($request->limit)
-        {
-            $orders = $query->paginate($request->limit);
-        } else {
-            $orders = $query->paginate();
+        if($search = $request->input('search')){
+            $query
+            ->whereRaw("latin LIKE '%". $search . "%'")
+            ->orWhereRaw("kiril LIKE '%". $search . "%'");
         }
-        return new WordCollection($orders);
+        else if($search=$request->input('letter')){
+            $query
+            ->whereRaw("latin LIKE '". $search . "%'")
+            ->orWhereRaw("kiril LIKE '%". $search . "%'");
+        }
+
+        $limit = $request->input('limit', 7);
+        $page = $request->input('page', 1);
+
+        $result = $query->paginate($limit, ['*'], 'page', $page);
+
+        return response(new WordCollection($result));
     }
 
     /**
@@ -91,7 +101,8 @@ class WordController extends Controller
     {
         $audio=Word::find($id);
         if(isset($audio)){
-            unlink($audio->audio);
+            if(isset($audio->audio))
+                unlink($audio->audio);
             $audioName=time().".".$request->audio->getClientOriginalExtension();
             $request->audio->move(public_path('/audio'),$audioName);
             $result = $request->validated();
@@ -129,12 +140,5 @@ class WordController extends Controller
         ]);
     }
 
-    // public function search(Request $request){
-    //     $query = Word::query();
-        
-    //     if($word = $request->word)
-    //     {
-    //         $data = $query->where(`latin`,"LIKE", "%$word%") OR (`kirill`, "LIKE", "%$word%");
-    //     }
-    // }
+
 }

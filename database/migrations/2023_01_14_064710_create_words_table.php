@@ -21,7 +21,8 @@ class CreateWordsTable extends Migration
             $table->foreignIdFor(Category::class)->constrained();
             $table->text('latin');
             $table->text('kiril');
-            $table->text('description');
+            $table->text('description_latin');
+            $table->text('description_kiril');
             $table->integer('count')->default(0);
             $table->text('audio')->nullable();
             $table->timestamps();

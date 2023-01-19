@@ -27,8 +27,9 @@ class UpdateWordRequest extends FormRequest
             'category_id'=>'integer',
             'latin'=>'required',
             'kiril'=>'required',
-            'description'=>'required',
-            'audio'=> 'mimes:ogg|required|max:10000'
+            'description_latin'=>'required',
+            'description_kiril'=>'required',
+            'audio'=> 'nullable|mimes:ogg|max:10000'
         ];
     }
 }
