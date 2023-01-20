@@ -9,6 +9,7 @@ use App\Http\Resources\Word\WordCollection;
 use App\Http\Resources\Word\WordItemResource;
 use App\Http\Resources\Word\WordResource;
 use App\Models\Word;
+use App\Models\WordCategory;
 use Illuminate\Http\Request;
 
 class WordController extends Controller
@@ -27,13 +28,22 @@ class WordController extends Controller
             ->whereRaw("latin LIKE '%". $search . "%'")
             ->orWhereRaw("kiril LIKE '%". $search . "%'");
         }
-        else if($search=$request->input('letter')){
+        elseif($search=$request->input('letter')){
             $query
             ->whereRaw("latin LIKE '". $search . "%'")
-            ->orWhereRaw("kiril LIKE '%". $search . "%'");
+            ->orWhereRaw("kiril LIKE '". $search . "%'");
+        }elseif ($request->input('sortBy')=='count') {
+            $query
+            ->orderBy('count', 'desc');
+        }elseif ($request->input('sortBy')=='latin') {
+            $query
+            ->orderBy('latin', 'asc');
+        }elseif ($request->input('sortBy')=='kiril') {
+            $query
+            ->orderBy('kiril', 'asc');
         }
 
-        $limit = $request->input('limit', 7);
+        $limit = $request->input('limit', 10);
         $page = $request->input('page', 1);
 
         $result = $query->paginate($limit, ['*'], 'page', $page);
@@ -49,6 +59,12 @@ class WordController extends Controller
      */
     public function store(StoreWordRequest $request)
     {
+        foreach ($request->categories_id as $key => $value) {
+            $request->validate([
+                "categories_id."."$key" =>'exists:categories,id'
+            ]);
+        }
+        
         if(isset($request->audio)){
             $audioName=time().".".$request->audio->getClientOriginalExtension();
             $request->audio->move(public_path('/audio'),$audioName);
@@ -59,6 +75,9 @@ class WordController extends Controller
             $result=$request->validated();
         }
         $created_word=Word::create($result);
+        foreach ($request->categories_id as  $key=>$value ){
+            WordCategory::create(['category_id'=>$value,'word_id'=>$created_word->id]);
+        }
         return response([
             'message'=>"qo'shildi",
             'data'=>new WordResource($created_word)
@@ -103,10 +122,13 @@ class WordController extends Controller
         if(isset($audio)){
             if(isset($audio->audio))
                 unlink($audio->audio);
-            $audioName=time().".".$request->audio->getClientOriginalExtension();
-            $request->audio->move(public_path('/audio'),$audioName);
-            $result = $request->validated();
-            $result['audio'] = 'audio/'.$audioName;
+            if(isset($request->audio)){
+                $audioName=time().".".$request->audio->getClientOriginalExtension();
+                $request->audio->move(public_path('/audio'),$audioName);
+                $result = $request->validated();
+                $result['audio'] = 'audio/'.$audioName;
+            }else
+                $result=$request->validated();
             Word::find($id)->update($result);
             $word=Word::find($id);
             return response([
@@ -130,10 +152,15 @@ class WordController extends Controller
     public function destroy($id)
     {
         $request=Word::find($id);
-        
         if(isset($request)){
-        $request->delete();
-        unlink($request->audio);
+            $categories=new WordResource($request);
+            foreach ($categories->category as $key => $value) {
+                $pivot_id=WordCategory::where('word_id',$id)->get()[0];
+                $pivot_id->delete();
+            }
+            $request->delete();
+            if(isset($request->audio))
+                unlink($request->audio);
         }
         return response([
             'message'=>"o'chirildi"

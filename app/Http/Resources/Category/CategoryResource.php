@@ -18,7 +18,7 @@ class CategoryResource extends JsonResource
             'id' => $this->id,
             'latin' => $this->latin,
             'kiril'=> $this->kiril,
-            'words'=>CategoryWordResource::collection($this->words),
+            'words_total'=>count($this->words)
         ];
     }
 }

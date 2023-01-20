@@ -13,7 +13,7 @@ class CategoryCollection extends ResourceCollection
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
 
-     public $collection=CategoryItemResource::class;
+     public $collects=CategoryItemResource::class;
     public function toArray($request)
     {
         return $this->collection;

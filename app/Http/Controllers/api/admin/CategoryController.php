@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Resources\Category\CategoryCollection;
 use App\Http\Resources\Category\CategoryResource;
 use App\Models\Category;
+use App\Models\WordCategory;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -94,9 +95,15 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $request=Category::find($id);
-        if(isset($request))
-        $request->delete();
-
+        if(isset($request)){
+            $pivot=WordCategory::where('category_id',$id)->get();
+            if(!empty($pivot[0])){
+                return response([
+                    'message'=>"there are words belonging to this category"
+                ]);
+        }
+        $request->delete(); 
+        }
         return response([
             'message'=>"o'chirildi"
         ]);

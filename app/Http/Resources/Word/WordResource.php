@@ -16,14 +16,13 @@ class WordResource extends JsonResource
     {
         return [
             'id'=>$this->id,
-            'category_id'=>$this->category_id,
             'latin'=>$this->latin,
             'kiril'=>$this->kiril,
             'description_latin'=>$this->description_latin,
             'description_kiril'=>$this->description_kiril,
             'count'=>$this->count,
             'audio'=>$this->audio,
-            'category'=>new WordCategoryResource($this->category),
+            'categories'=>WordCategoryResource::collection($this->category),
         ];
     }
 }

@@ -11,6 +11,6 @@ class Category extends Model
     protected $guarded=['id'];
     public function words()
     {
-        return $this->hasMany(Word::class);
+        return $this->belongsToMany(Word::class,'word_categories');
     }
 }

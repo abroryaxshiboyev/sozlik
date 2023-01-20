@@ -12,6 +12,6 @@ class Word extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsToMany(Category::class,'word_categories');
     }
 }

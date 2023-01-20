@@ -54,9 +54,11 @@ class CreateLettersTable extends Migration
         DB::table('letters')->insert(['latin' => 'c','kiril'=>'ц']);
         DB::table('letters')->insert(['latin' => 'sh','kiril'=>'ш']);
         DB::table('letters')->insert(['latin' => 'ch','kiril'=>'ч']);
-        
+        DB::table('letters')->insert(['latin' => 'ya','kiril'=>'я']);
+        DB::table('letters')->insert(['latin' => 'yu','kiril'=>'ю']);
+        DB::table('letters')->insert(['latin' => 'yo','kiril'=>'ё']);
     }
-
+    //á ú ń ó ı ǵ
     /**
      * Reverse the migrations.
      *

@@ -35,8 +35,8 @@ class AuthController extends Controller
     {
         return response([
             'message' => 'success',
-            'data' => [
-                'user_id' => $request->user()->id,
+            'user' => [
+                'id' => $request->user()->id,
                 'name' => $request->user()->name,
                 'phone' => $request->user()->phone
             ]

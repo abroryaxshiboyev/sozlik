@@ -18,7 +18,6 @@ class CreateWordsTable extends Migration
     {
         Schema::create('words', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Category::class)->constrained();
             $table->text('latin');
             $table->text('kiril');
             $table->text('description_latin');

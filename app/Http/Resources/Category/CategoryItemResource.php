@@ -12,13 +12,14 @@ class CategoryItemResource extends JsonResource
      * @param  \Illuminate\Http\Request  $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
+    public $collects=CategoryWordResource::class;
     public function toArray($request)
     {
         return [
             'id' => $this->id,
             'latin1' => $this->latin,
             'kiril'=> $this->kiril,
-            'words'=>CategoryWordResource::collection($this->words),
+            'words_total'=> count($this->words)
         ];
     }
 }
