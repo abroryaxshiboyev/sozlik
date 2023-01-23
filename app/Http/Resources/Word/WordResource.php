@@ -23,6 +23,8 @@ class WordResource extends JsonResource
             'count'=>$this->count,
             'audio'=>$this->audio,
             'categories'=>WordCategoryResource::collection($this->category),
+            'synonyms'=>SynonymResource::collection($this->synonyms),
+            'antonyms'=>SynonymResource::collection($this->antonyms)
         ];
     }
 }

@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Resources\Category;
+namespace App\Http\Resources\Word;
 
-use App\Models\Category;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CategoryResource extends JsonResource
+class SynonymResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -13,14 +12,12 @@ class CategoryResource extends JsonResource
      * @param  \Illuminate\Http\Request  $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
-    public $collects=CategoryWordResource::class;
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
-            'latin' => $this->latin,
-            'kiril'=> $this->kiril,
-            'words'=>CategoryWordResource::collection($this->words),
+            'id'=>$this->id,
+            'latin'=>$this->latin,
+            'kiril'=>$this->kiril,
         ];
     }
 }

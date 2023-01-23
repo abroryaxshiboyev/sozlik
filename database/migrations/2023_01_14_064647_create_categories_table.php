@@ -17,6 +17,7 @@ class CreateCategoriesTable extends Migration
             $table->id();
             $table->text('latin');
             $table->text('kiril');
+            $table->softDeletes(); 
             $table->timestamps();
         });
     }

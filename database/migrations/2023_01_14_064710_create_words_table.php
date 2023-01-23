@@ -24,6 +24,7 @@ class CreateWordsTable extends Migration
             $table->text('description_kiril');
             $table->integer('count')->default(0);
             $table->text('audio')->nullable();
+            $table->softDeletes(); 
             $table->timestamps();
         });
     }

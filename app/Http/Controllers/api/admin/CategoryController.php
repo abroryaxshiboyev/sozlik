@@ -9,6 +9,7 @@ use App\Http\Resources\Category\CategoryCollection;
 use App\Http\Resources\Category\CategoryResource;
 use App\Models\Category;
 use App\Models\WordCategory;
+use Countable;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -21,7 +22,7 @@ class CategoryController extends Controller
     public function index()
     {
         return response([
-            'message'=>"Hamma kategoriyalar",
+            'message'=>"all categories",
             'data'=>new CategoryCollection(Category::all())]);
     }
 
@@ -35,7 +36,7 @@ class CategoryController extends Controller
     {
         $letter_create=Category::create($request->validated());
         return response([
-            'message'=>"qo'shildi",
+            'message'=>"created category",
             'data'=>new CategoryResource($letter_create)
         ], 201);
     }
@@ -46,17 +47,26 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id,Request $request)
     {
-        $r=Category::find($id);
-        if(isset($r)){
+        $limit = $request->input('limit', 10);
+        $words=Category::find($id);
+
+        if(isset($words)){
+            $words->setRelation('words', 
+            $words->words()->orderBy('latin')->paginate($limit)
+            );
+            $count=WordCategory::where('category_id',$id)->count();
+
             return response([
-                'message'=>'category',
-                'data'=>new CategoryResource(Category::find($id))]); 
+                'message'=>'one category',
+                'data'=>new CategoryResource($words),
+                'words_total'=>$count
+            ]); 
         }
         else{
             return response([
-                'message'=>'id not'
+                'message'=>'id not found'
             ], 404);
         }
     }
@@ -75,13 +85,13 @@ class CategoryController extends Controller
             Category::find($id)->update($request->validated());
             $Letter=Category::find($id);
             return response([
-                'message'=>"o'zgartirildi",
+                'message'=>"updated successfully",
                 'data'=>new CategoryResource($Letter)
             ]);
         }
         else{
             return response([
-                'message'=>'id not'
+                'message'=>'id not found'
             ], 404);
         }
     }
@@ -103,9 +113,14 @@ class CategoryController extends Controller
                 ]);
         }
         $request->delete(); 
-        }
+        
         return response([
-            'message'=>"o'chirildi"
+            'message'=>"delete this category"
         ]);
+    }else {
+        return response([
+            'message'=>"id not found"
+        ]);
+    }
     }
 }
