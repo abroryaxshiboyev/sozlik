@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Resources\Category\CategoryCollection;
+use App\Http\Resources\Category\CategoryItemResource;
 use App\Http\Resources\Category\CategoryResource;
 use App\Models\Category;
 use App\Models\WordCategory;
@@ -86,7 +87,7 @@ class CategoryController extends Controller
             $Letter=Category::find($id);
             return response([
                 'message'=>"updated successfully",
-                'data'=>new CategoryResource($Letter)
+                'data'=>new CategoryItemResource($Letter)
             ]);
         }
         else{
