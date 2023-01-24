@@ -45,6 +45,7 @@ Route::put('categories/{id}',[CategoryController::class,'update']);
 Route::delete('categories/{id}',[CategoryController::class,'destroy']);
 
 //Word
+Route::get('wordsdate',[WordController::class,'sortDate']);
 Route::post('words',[WordController::class,'store']);
 Route::put('words/{id}',[WordController::class,'update']);
 Route::delete('words/{id}',[WordController::class,'destroy']);

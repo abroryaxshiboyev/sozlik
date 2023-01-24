@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreWordRequest;
 use App\Http\Requests\UpdateWordRequest;
 use App\Http\Resources\Word\CountWordResource;
+use App\Http\Resources\Word\DateResource;
 use App\Http\Resources\Word\WordCollection;
 use App\Http\Resources\Word\WordItemResource;
 use App\Http\Resources\Word\WordResource;
@@ -22,6 +23,13 @@ class WordController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function sortDate(Request $request){
+        $limit = $request->input('limit', 10);
+        $words=Word::orderBy('id','desc')->limit(50)->paginate($limit);
+        return response([
+            'data'=>DateResource::collection($words)
+        ]);
+    }
     public function index(Request $request)
     {
         $query = Word::query();
@@ -44,6 +52,9 @@ class WordController extends Controller
         }elseif ($request->input('sortBy')=='kiril') {
             $query
             ->orderBy('kiril', 'asc');
+        }elseif ($request->input('sortBy')=='date') {
+            $query
+            ->orderBy('created_at', 'desc');
         }
         $limit = $request->input('limit', 10);
         $page = $request->input('page', 1);
