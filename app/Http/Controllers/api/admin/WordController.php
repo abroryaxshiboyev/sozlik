@@ -50,13 +50,6 @@ class WordController extends Controller
 
         $result = $query->paginate($limit, ['*'], 'page', $page);
         
-        // $collection=collect($result);
-        // $statusPriorities = ["b","a"];
-        // return $collection;
-        // $a=$collection->sortBy(function($order) use($statusPriorities){
-        // return array_search($order->data['latin'], $statusPriorities);
-        // })->values()->all();
-        // return $a;
         return response(new WordCollection($result));
     }
 
