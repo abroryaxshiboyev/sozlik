@@ -22,7 +22,7 @@ class WordItemResource extends JsonResource
             'description_kiril'=>$this->description_kiril,
             'count'=>$this->count,
             'audio'=>$this->audio,
-            'categories'=>WordCategoryResource::collection($this->category),
+            'categories'=>WordCategoryResource::collection($this->categories),
         ];
     }
 }

@@ -10,9 +10,9 @@ class Word extends Model
     use HasFactory;
     protected $guarded=['id'];
 
-    public function category()
+    public function categories()
     {
-        return $this->belongsToMany(Category::class,'word_categories');
+        return $this->belongsToMany(Category::class,'word_categories')->as('categories');
     }
     public function synonyms()
     {

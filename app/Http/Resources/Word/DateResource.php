@@ -19,7 +19,7 @@ class DateResource extends JsonResource
             'latin'=>$this->latin,
             'kiril'=>$this->kiril,
             'created_at'=>$this->created_at,
-            'categories'=>WordCategoryResource::collection($this->category),
+            'categories'=>WordCategoryResource::collection($this->categories),
         ];
     }
 }

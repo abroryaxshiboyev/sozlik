@@ -109,22 +109,11 @@ class WordController extends Controller
         }
         //so'zni create qilish
         $created_word=Word::create($result);
-        $id=$created_word->id;
-        //pivot tablitsaga category ni create qilish
-        foreach ($request->categories_id as  $key=>$value ){
-            WordCategory::create(['category_id'=>$value,'word_id'=>$id]);
-        }
-        //pivot tablitsaga sinonim so'zlarni qo'shish agar bor bo'lsa
-        if(isset($request->synonyms))
-            foreach ($synonyms as $key => $value) {
-                Synonym::create(['word_id'=>$value,'synonym_word_id'=>$id]);
-            }
-        
-        //pivot tablitsaga antonim so'zlarni qo'shish agar bor bo'lsa
-        if(isset($request->antonyms))
-            foreach ($antonyms as $key => $value) {
-                Antonym::create(['word_id'=>$value,'antonym_word_id'=>$id]);
-            }
+        $word=Word::find($created_word->id);
+        $word->categories()->sync($request['categories_id']);
+        $word->synonyms()->sync($request['synonyms']);
+        $word->antonyms()->sync($request['antonyms']);
+
         return response([
             'message'=>"created word",
             'data'=>new WordResource($created_word)
@@ -208,36 +197,13 @@ class WordController extends Controller
             //update qilish
             Word::find($id)->update($result);
             $word=Word::find($id);
-            //shu so'zga tegishli bo'lgan kategoriyalarni pivot tablitsadan o'chirish
-            $categories=WordCategory::where('word_id',$id)->get();
-            foreach ($categories as $key => $value) {
-                WordCategory::find($value['id'])->delete();
-            }
-            //shu so'zga tegishli bo'lgan kategoriyalarni pivot tablitsaga qo'shish
-            foreach ($request->categories_id as  $key=>$value ){
-                WordCategory::create(['category_id'=>$value,'word_id'=>$id]);
-            }
-            //sinonim so'zlarni pivot tablitsadan o'chirish
-            $synonyms_=Synonym::where('synonym_word_id',$id)->get();
-            foreach ($synonyms_ as $key => $value) {
-                Synonym::find($value['id'])->delete();
-            }
-            //sinonim so'zlarni pivot tablitsaga qo'shish
-            if(isset($request->synonyms))
-                foreach ($synonyms as $key => $value) {
-                    Synonym::create(['word_id'=>$value,'synonym_word_id'=>$id]);
-                }
-            //antonim so'zlarni pivot tablitsadan o'chirish
-            $antonyms_=Antonym::where('antonym_word_id',$id)->get();
-            foreach ($antonyms_ as $key => $value) {
-                Antonym::find($value['id'])->delete();
-            }
-            //antonim so'zlarni pivot tablitsaga qo'shish
-            if(isset($request->antonyms))
-                foreach ($antonyms as $key => $value) {
-                    Antonym::create(['word_id'=>$value,'antonym_word_id'=>$id]);
-                }
-            
+  
+            $word->categories()->sync($request['categories_id']);
+
+            $word->synonyms()->sync($request['synonyms']);
+
+            $word->antonyms()->sync($request['antonyms']);
+
             return response([
                 'message'=>"updated successfully",
                 'data'=>new WordResource($word)
@@ -268,15 +234,10 @@ class WordController extends Controller
             }
 
             //pivot tablitsadan sinonim larni o'chirish
-            $synonyms_=Synonym::where('synonym_word_id',$id)->orWhere('word_id',$id)->get();
-            foreach ($synonyms_ as $key => $value) {
-                Synonym::find($value['id'])->delete();
-            }
+            Synonym::where('synonym_word_id',$id)->orWhere('word_id',$id)->delete();
+        
             //pivot tablitsadan antonim larni o'chirish
-            $antonyms_=Antonym::where('antonym_word_id',$id)->orWhere('word_id',$id)->get();
-            foreach ($antonyms_ as $key => $value) {
-                Antonym::find($value['id'])->delete();
-            }
+            Antonym::where('antonym_word_id',$id)->orWhere('word_id',$id)->delete();
                         
             //audio faylni o'chirish
             if(isset($request->audio))
@@ -295,12 +256,5 @@ class WordController extends Controller
     }
     }
 
-    // public function countSort(){
-    //    $words = Word::query()->orderBy('count', 'desc')->limit(9);
-    //    $word_counts=CountWordResource::collection($words);
-    //     return response([
-            
-    //         'counts'=>$word_counts
-    //     ]);
-    // }
+    
 }
