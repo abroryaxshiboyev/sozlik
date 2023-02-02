@@ -19,6 +19,7 @@ use Illuminate\Http\Request;
 
 class WordController extends Controller
 {
+    ///Abror Yaxshiboyev
     /**
      * Display a listing of the resource.
      *
