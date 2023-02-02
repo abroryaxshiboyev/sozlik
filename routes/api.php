@@ -3,6 +3,7 @@
 use App\Http\Controllers\api\admin\AuthController;
 use App\Http\Controllers\api\admin\CategoryController;
 use App\Http\Controllers\api\admin\LetterController;
+use App\Http\Controllers\api\admin\SearchController;
 use App\Http\Controllers\api\admin\UserController;
 use App\Http\Controllers\api\admin\WordController;
 use Illuminate\Http\Request;
@@ -40,6 +41,7 @@ Route::post('logout',[AuthController::class,'logout']);
 Route::get('check',[AuthController::class,'check']);
 
 //categories
+Route::get('categoriesdate',[CategoryController::class,'sortDate']);
 Route::post('categories',[CategoryController::class,'store']);
 Route::put('categories/{id}',[CategoryController::class,'update']);
 Route::delete('categories/{id}',[CategoryController::class,'destroy']);
@@ -49,6 +51,10 @@ Route::get('wordsdate',[WordController::class,'sortDate']);
 Route::post('words',[WordController::class,'store']);
 Route::put('words/{id}',[WordController::class,'update']);
 Route::delete('words/{id}',[WordController::class,'destroy']);
+
+//Search
+Route::get('searches',[SearchController::class,'index']);
+Route::delete('searches/{id}',[SearchController::class,'destroy']);
 
 });
 

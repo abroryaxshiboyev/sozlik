@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Resources\Category\CategoryCollection;
 use App\Http\Resources\Category\CategoryItemResource;
 use App\Http\Resources\Category\CategoryResource;
+use App\Http\Resources\Category\DateResource;
 use App\Models\Category;
 use App\Models\WordCategory;
 use Countable;
@@ -20,6 +21,13 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function sortDate(Request $request){
+        $limit = $request->input('limit', 10);
+        $category=Category::orderBy('created_at','desc')->paginate($limit);
+        return response([
+            'data'=>DateResource::collection($category)
+        ]);
+    }
     public function index()
     {
         return response([

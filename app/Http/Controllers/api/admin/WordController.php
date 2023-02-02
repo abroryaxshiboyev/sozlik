@@ -11,6 +11,7 @@ use App\Http\Resources\Word\WordCollection;
 use App\Http\Resources\Word\WordItemResource;
 use App\Http\Resources\Word\WordResource;
 use App\Models\Antonym;
+use App\Models\Search;
 use App\Models\Synonym;
 use App\Models\Word;
 use App\Models\WordCategory;
@@ -25,11 +26,12 @@ class WordController extends Controller
      */
     public function sortDate(Request $request){
         $limit = $request->input('limit', 10);
-        $words=Word::orderBy('id','desc')->limit(50)->paginate($limit);
+        $words=Word::orderBy('created_at','desc')->paginate($limit);
         return response([
             'data'=>DateResource::collection($words)
         ]);
     }
+    
     public function index(Request $request)
     {
         $query = Word::query();
@@ -38,6 +40,11 @@ class WordController extends Controller
             $query
             ->whereRaw("latin LIKE '%". $search . "%'")
             ->orWhereRaw("kiril LIKE '%". $search . "%'");
+            if($search!="")
+                Search::create([
+                    'word_name' => $search
+                ]);
+            
         }
         elseif($search=$request->input('letter')){
             $query
