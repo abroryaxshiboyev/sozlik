@@ -4,7 +4,7 @@ namespace App\Http\Resources\Word;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CountWordResource extends JsonResource
+class SearchItemResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

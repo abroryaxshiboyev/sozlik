@@ -30,7 +30,9 @@ Route::get('categories/{id}',[CategoryController::class,'show']);
 
 Route::get('words',[WordController::class,'index']);
 Route::get('words/{id}',[WordController::class,'show']);
-Route::get('words_count',[WordController::class,'countSort']);
+
+Route::get('search',[SearchController::class,'words']);
+
 
 Route::post('authenticate',[AuthController::class,'authenticate']);
 
