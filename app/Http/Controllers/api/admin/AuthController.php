@@ -35,10 +35,12 @@ class AuthController extends Controller
     {
         return response([
             'message' => 'success',
-            'user' => [
-                'id' => $request->user()->id,
-                'name' => $request->user()->name,
-                'phone' => $request->user()->phone
+            'data'=>[
+                'user' => [
+                    'id' => $request->user()->id,
+                    'name' => $request->user()->name,
+                    'phone' => $request->user()->phone
+                ]
             ]
         ]);
     }
