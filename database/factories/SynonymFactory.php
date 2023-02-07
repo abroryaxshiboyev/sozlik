@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Word;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class SynonymFactory extends Factory
@@ -14,7 +15,12 @@ class SynonymFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'word_id' =>function(){
+                return Word::factory()->create()->id;
+            },
+            'synonym_word_id' =>function(){
+                return Word::factory()->create()->id;
+            },
         ];
     }
 }

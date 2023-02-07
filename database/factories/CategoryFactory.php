@@ -14,7 +14,8 @@ class CategoryFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'kiril'=>$this->faker->word,
+            'latin'=>$this->faker->word
         ];
     }
 }

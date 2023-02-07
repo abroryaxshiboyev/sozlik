@@ -17,7 +17,7 @@ class CreateAntonymsTable extends Migration
         Schema::create('antonyms', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Word::class)->constrained();
-            $table->integer('antonym_word_id');
+            $table->bigInteger('antonym_word_id');
             $table->softDeletes(); 
             $table->timestamps();
         });

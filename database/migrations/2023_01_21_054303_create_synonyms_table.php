@@ -17,7 +17,7 @@ class CreateSynonymsTable extends Migration
         Schema::create('synonyms', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Word::class)->constrained();
-            $table->integer('synonym_word_id');
+            $table->bigInteger('synonym_word_id');
             $table->softDeletes(); 
             $table->timestamps();
         });

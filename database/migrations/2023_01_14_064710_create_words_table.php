@@ -22,7 +22,7 @@ class CreateWordsTable extends Migration
             $table->text('kiril');
             $table->text('description_latin');
             $table->text('description_kiril');
-            $table->integer('count')->default(0);
+            $table->bigInteger('count')->default(0);
             $table->text('audio')->nullable();
             $table->softDeletes(); 
             $table->timestamps();
