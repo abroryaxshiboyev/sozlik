@@ -14,7 +14,8 @@ class LetterFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'latin'=>$this->faker->word,
+            'kiril'=>$this->faker->word
         ];
     }
 }
