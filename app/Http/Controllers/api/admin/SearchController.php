@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api\admin;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\SearchCollection;
 use App\Http\Resources\Word\SearchCollection as WordSearchCollection;
+use App\Http\Resources\Word\WordResource;
 use App\Models\Letter;
 use App\Models\Search;
 use App\Models\Word;
@@ -29,51 +30,35 @@ class SearchController extends Controller
             
         }
         elseif($search=$request->input('letter')){
-            // $query
-            // ->whereRaw("latin LIKE '". $search . "%'")
-            // ->orWhereRaw("kiril LIKE '". $search . "%'");
-            $words=Word::where('latin', 'LIKE', $search.'%')->orWhere('kiril', 'LIKE', $search.'%')->get();
+            $perPage = $request->input('limit', 10);
+            $page = $request->input('page', 1);
             $letters=Letter::where('latin',$search)->orWhere('kiril', 'LIKE', $search.'%')->get();
-            if(count($letters)==2){
+            $count=count($letters);
+            if($count==2){
+                $words=Word::where('latin', 'LIKE', $search.'%')->orWhere('kiril', 'LIKE', $search.'%')->get();
                 if ($letters[0]['latin']==$search) {
                     $letter=$letters[0]['latin'][0];
-                    $status="latin";
-                } elseif($letters[1]['latin']==$search){
-                    $letter=$letters[1]['latin'][0];
-                    $status="latin";
-                }
-                elseif ($letters[0]['kiril']==$search) {
-                    $letter=$letters[0]['kiril'][0];
-                    $status="kiril";
-                } else {
-                    $letter=$letters[1]['kiril'][0];
-                    $status="kiril";
-                }
-            }else{
-                if ($letters[0]['latin']==$search) {
-                    $letter=$letters[0]['latin'][0];
-                    $status="latin";
                 }else{
-                    $letter=$letters[0]['kiril'][0];
-                    $status="kiril";
+                    $letter=$letters[1]['latin'][0];
                 }
-            }
-            $array=[];
-            foreach ($words as $word){
-                $str=$word[$status][0];
-                if($letter==$str)
-                    $array[]=$word;
-                }
-        $perPage = $request->input('limit', 10);
-        $page = $request->input('page', 1);
-        $offset = ($page * $perPage) - $perPage;
+                $array=[];
+                foreach ($words as $word){
+                    $str=$word['latin'][0];
+                    if($letter==$str)
+                        $array[]=$word;
+                    }
+                $offset = ($page * $perPage) - $perPage;
 
-        $requestData =  new LengthAwarePaginator(
-        array_slice($array, $offset, $perPage, true),
-        count($array),
-        $perPage,
-        $page
-        );
+                $requestData =  new LengthAwarePaginator(
+                array_slice($array, $offset, $perPage, true),
+                count($array),
+                $perPage,
+                $page
+                );
+            }else{
+                $requestData=Word::where('latin', 'LIKE', $search.'%')->orWhere('kiril', 'LIKE', $search.'%')->paginate($perPage);   
+            }
+            
         return response(new WordSearchCollection($requestData));
             
         }elseif ($request->input('sortBy')=='count') {
@@ -114,6 +99,24 @@ class SearchController extends Controller
             return response([
                 'message'=>'id not found',
             ]); 
+        }
+    }
+    public function show($id)
+    {
+        $r=Word::find($id);
+        if(isset($r)){
+            $word=Word::find($id);
+            $word->update([
+                'count'=>$word->count+1
+            ]);
+            return response([
+                'message'=>'one word',
+                'data'=>new WordResource(Word::find($id))]); 
+        }
+        else{
+            return response([
+                'message'=>'id not found',
+            ], 404);
         }
     }
 }

@@ -17,7 +17,7 @@ class CategoryItemResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'latin1' => $this->latin,
+            'latin' => $this->latin,
             'kiril'=> $this->kiril,
             'words_total'=> count($this->words)
         ];

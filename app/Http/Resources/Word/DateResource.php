@@ -18,6 +18,7 @@ class DateResource extends JsonResource
             'id'=>$this->id,
             'latin'=>$this->latin,
             'kiril'=>$this->kiril,
+            'count'=>$this->count,
             'created_at'=>$this->created_at,
             'categories'=>WordCategoryResource::collection($this->categories),
         ];

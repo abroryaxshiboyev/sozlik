@@ -32,6 +32,7 @@ Route::get('words',[WordController::class,'index']);
 Route::get('words/{id}',[WordController::class,'show']);
 
 Route::get('search',[SearchController::class,'words']);
+Route::get('search/{id}',[SearchController::class,'show']);
 
 
 Route::post('authenticate',[AuthController::class,'authenticate']);
