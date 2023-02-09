@@ -146,7 +146,8 @@ class CategoryController extends Controller
         $request->delete(); 
         
         return response([
-            'message'=>"delete this category"
+            'message'=>"delete this category",
+            'data'=>'dsfghj'
         ],200);
     }else {
         return response([
