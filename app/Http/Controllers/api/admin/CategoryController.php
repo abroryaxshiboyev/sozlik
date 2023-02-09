@@ -9,6 +9,7 @@ use App\Http\Resources\Category\CategoryCollection;
 use App\Http\Resources\Category\CategoryItemResource;
 use App\Http\Resources\Category\CategoryResource;
 use App\Http\Resources\Category\DateResource;
+use App\Http\Resources\Category\OneCategoryResource;
 use App\Models\Category;
 use App\Models\WordCategory;
 use Countable;
@@ -76,6 +77,22 @@ class CategoryController extends Controller
                 'message'=>'one category',
                 'data'=>new CategoryResource($words),
                 'words_total'=>$count
+            ]); 
+        }
+        else{
+            return response([
+                'message'=>'id not found'
+            ], 404);
+        }
+    }
+    public function show2($id,Request $request)
+    {
+        $words=Category::find($id);
+
+        if(isset($words)){
+            return response([
+                'message'=>'one category',
+                'data'=>new OneCategoryResource($words),
             ]); 
         }
         else{

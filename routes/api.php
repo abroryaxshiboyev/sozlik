@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('categories',[CategoryController::class,'index']);
 Route::get('categories/{id}',[CategoryController::class,'show']);
+Route::get('category/{id}',[CategoryController::class,'show2']);
 
 Route::get('words',[WordController::class,'index']);
 Route::get('words/{id}',[WordController::class,'show']);
