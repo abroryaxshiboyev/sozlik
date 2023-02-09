@@ -141,13 +141,14 @@ class CategoryController extends Controller
             if(!empty($pivot[0])){
                 return response([
                     'message'=>'there are words belonging to this category',
-                    'data'=>$request
-                ],205);
+                    'data'=>false
+                ],200);
         }
         $request->delete(); 
         
         return response([
             'message'=>"delete this category",
+            'data'=>true
         ],200);
     }else {
         return response([
