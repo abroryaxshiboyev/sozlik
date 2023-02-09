@@ -140,14 +140,14 @@ class CategoryController extends Controller
             $pivot=WordCategory::where('category_id',$id)->get();
             if(!empty($pivot[0])){
                 return response([
-                    'message'=>"there are words belonging to this category"
+                    'message'=>"there are words belonging to this category",
+                    'data'=>'dsfghj'
                 ],205);
         }
         $request->delete(); 
         
         return response([
             'message'=>"delete this category",
-            'data'=>'dsfghj'
         ],200);
     }else {
         return response([
