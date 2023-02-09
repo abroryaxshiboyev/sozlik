@@ -4,10 +4,14 @@ namespace App\Http\Controllers\api\admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginApiRequest;
+use App\Http\Requests\StoreUserRequest;
 use App\Http\Resources\User\UserResource;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -63,5 +67,49 @@ class AuthController extends Controller
             ]
         ]);
     }
-    // public function createAdmin()
+    public function createAdmin(StoreUserRequest $request){
+        $request->validated();
+        $user=auth()->user(); 
+        if($user->id==1){
+            $user=User::create([
+                'name' =>$request->name,
+                'phone' =>$request->phone,
+                'password' =>Hash::make($request->password)
+            ]);
+            return response()->json([
+                'message'=>'created successfully',
+                'data'=>$user
+            ]);
+        }else{
+            return response([
+                'message'=>'you have no such right'
+            ]);
+        }
+    }
+    public function deleteAdmin($id){
+        
+        $user=auth()->user(); 
+        if($user->id==1){
+            $delete_user=User::find($id);
+            if(isset($delete_user)){
+                if($delete_user->id==1)
+                    return response([
+                        'message'=>'you have no such right'
+                    ]);
+                $delete_user->tokens()->delete();
+                $delete_user->delete();    
+                return response()->json([
+                    'message'=>'deleted successfully',
+                ]);
+            }else{
+                return response()->json([
+                    'message'=>'id not found',
+                ]);  
+            }
+        }else{
+            return response([
+                'message'=>'you have no such right'
+            ]);
+        }
+    }
 }

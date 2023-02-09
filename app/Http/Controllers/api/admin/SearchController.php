@@ -16,18 +16,24 @@ use Nette\Utils\Paginator as UtilsPaginator;
 
 class SearchController extends Controller
 {
+    public function store(Request $request){
+        $request->validate([
+            'word_name'=>'required',
+        ]);
+        Search::create([
+            'word_name' => $request->word_name,
+        ]);
+        return response([
+            'message' =>'searching created successfully'
+        ]);
+    }
     public function words(Request $request){
         $query = Word::query();
 
         if($search = $request->input('search')){
             $query
             ->whereRaw("latin LIKE '%". $search . "%'")
-            ->orWhereRaw("kiril LIKE '%". $search . "%'");
-            if($search!="")
-                Search::create([
-                    'word_name' => $search
-                ]);
-            
+            ->orWhereRaw("kiril LIKE '%". $search . "%'");    
         }
         elseif($search=$request->input('letter')){
             $perPage = $request->input('limit', 10);

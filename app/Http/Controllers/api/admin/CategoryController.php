@@ -23,9 +23,13 @@ class CategoryController extends Controller
      */
     public function sortDate(Request $request){
         $limit = $request->input('limit', 10);
-        $category=Category::orderBy('created_at','desc')->paginate($limit);
+        $category=Category::orderBy('created_at','desc');
+        $count=count($category->get());
+        $category_=$category->paginate($limit);
         return response([
-            'data'=>DateResource::collection($category)
+            'message' => 'date sorting',
+            'data'=>DateResource::collection($category_),
+            'total' => $count
         ]);
     }
     public function index()

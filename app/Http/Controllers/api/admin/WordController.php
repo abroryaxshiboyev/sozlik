@@ -27,9 +27,13 @@ class WordController extends Controller
      */
     public function sortDate(Request $request){
         $limit = $request->input('limit', 10);
-        $words=Word::orderBy('created_at','desc')->paginate($limit);
+        $words=Word::orderBy('created_at','desc');
+        $count=count($words->get());
+        $words_=$words->paginate($limit);
         return response([
-            'data'=>DateResource::collection($words)
+            'message' => 'date sorting',
+            'data'=>DateResource::collection($words_),
+            'total'=>$count
         ]);
     }
     

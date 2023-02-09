@@ -33,6 +33,7 @@ Route::get('words/{id}',[WordController::class,'show']);
 
 Route::get('search',[SearchController::class,'words']);
 Route::get('search/{id}',[SearchController::class,'show']);
+Route::post('search',[SearchController::class,'store']);
 
 
 Route::post('authenticate',[AuthController::class,'authenticate']);
@@ -42,6 +43,9 @@ Route::middleware('auth:sanctum')->group(function(){
 //auth    
 Route::post('logout',[AuthController::class,'logout']);
 Route::get('check',[AuthController::class,'check']);
+//admin create and delete
+Route::post('admins',[AuthController::class,'createAdmin']);
+Route::delete('admins/{id}',[AuthController::class,'deleteAdmin']);
 
 //categories
 Route::get('categoriesdate',[CategoryController::class,'sortDate']);

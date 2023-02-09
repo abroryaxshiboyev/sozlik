@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Letter extends Model
 {
     use HasFactory;
-    protected $guarded=['id'];
+    protected $protected=['latin','kiril'];
 }
