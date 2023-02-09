@@ -260,7 +260,7 @@ class WordController extends Controller
         
         return response([
             'message'=>"deleted",
-        ]);
+        ],200);
     }else {
         return response([
             'message'=>"id not found",

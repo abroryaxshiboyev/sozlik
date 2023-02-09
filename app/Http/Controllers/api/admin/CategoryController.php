@@ -147,7 +147,7 @@ class CategoryController extends Controller
         
         return response([
             'message'=>"delete this category"
-        ]);
+        ],200);
     }else {
         return response([
             'message'=>"id not found"
