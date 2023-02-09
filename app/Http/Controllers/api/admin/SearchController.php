@@ -104,7 +104,7 @@ class SearchController extends Controller
         else {
             return response([
                 'message'=>'id not found',
-            ]); 
+            ],404); 
         }
     }
     public function show($id)

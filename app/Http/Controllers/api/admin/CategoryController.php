@@ -36,7 +36,8 @@ class CategoryController extends Controller
     {
         return response([
             'message'=>"all categories",
-            'data'=>new CategoryCollection(Category::all())]);
+            'data'=>new CategoryCollection(Category::all())
+        ]);
     }
 
     /**
@@ -123,7 +124,7 @@ class CategoryController extends Controller
             if(!empty($pivot[0])){
                 return response([
                     'message'=>"there are words belonging to this category"
-                ]);
+                ],404);
         }
         $request->delete(); 
         
@@ -133,7 +134,7 @@ class CategoryController extends Controller
     }else {
         return response([
             'message'=>"id not found"
-        ]);
+        ],404);
     }
     }
 }
