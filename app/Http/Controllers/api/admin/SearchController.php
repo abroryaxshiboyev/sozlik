@@ -28,7 +28,14 @@ class SearchController extends Controller
             'message' =>'searching created successfully'
         ]);
     }
+    public function words2(){
+        $search=Word::all();
+        return response([
+            'message'=>'all searching words',
+            'data'=>SearchItemResource::collection($search)
+        ]);
 
+    }
     public function words(Request $request){
         $query = Word::query();
 
@@ -92,7 +99,7 @@ class SearchController extends Controller
         $searching=Search::all();
         return response([
             'message'=>'all searching words',
-            'data'=>SearchItemResource::collection($searching)
+            'data'=>$searching
         ]);
     }
     public function destroy($id){

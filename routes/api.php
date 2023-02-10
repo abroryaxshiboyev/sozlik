@@ -32,7 +32,7 @@ Route::get('category/{id}',[CategoryController::class,'show2']);
 Route::get('words',[WordController::class,'index']);
 Route::get('words/{id}',[WordController::class,'show']);
 
-Route::get('searchall',[SearchController::class,'index']);
+Route::get('searchall',[SearchController::class,'words2']);
 Route::get('search',[SearchController::class,'words']);
 Route::get('search/{id}',[SearchController::class,'show']);
 Route::post('search',[SearchController::class,'store']);
