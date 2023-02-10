@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api\admin;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\SearchCollection;
 use App\Http\Resources\Word\SearchCollection as WordSearchCollection;
+use App\Http\Resources\Word\SearchItemResource;
 use App\Http\Resources\Word\WordResource;
 use App\Models\Letter;
 use App\Models\Search;
@@ -91,7 +92,7 @@ class SearchController extends Controller
         $searching=Search::all();
         return response([
             'message'=>'all searching words',
-            'data'=>new WordSearchCollection($searching)
+            'data'=>SearchItemResource::collection($searching)
         ]);
     }
     public function destroy($id){
