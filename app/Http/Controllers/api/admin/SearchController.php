@@ -32,7 +32,7 @@ class SearchController extends Controller
         $search=Word::all();
         return response([
             'message'=>'all searching words',
-            'data'=>SearchItemResource::collection($search)
+            'data'=>new WordSearchCollection($search)
         ]);
 
     }
