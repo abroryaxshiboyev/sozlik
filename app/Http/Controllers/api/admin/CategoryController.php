@@ -52,7 +52,7 @@ class CategoryController extends Controller
         $letter_create=Category::create($request->validated());
         return response([
             'message'=>"created category",
-            'data'=>new CategoryResource($letter_create)
+            'data'=>new OneCategoryResource($letter_create)
         ], 201);
     }
 

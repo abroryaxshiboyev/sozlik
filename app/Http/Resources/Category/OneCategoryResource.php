@@ -15,6 +15,7 @@ class OneCategoryResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id'=>$this->id,
             'latin' => $this->latin,
             'kiril'=> $this->kiril,
         ];

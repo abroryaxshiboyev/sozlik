@@ -29,7 +29,7 @@ class StoreWordRequest extends FormRequest
             'kiril'=>'required',
             'description_latin'=>'required',
             'description_kiril'=>'required',
-            'audio'=> 'nullable'
+            'audio'=> 'nullable|mimes:ogg,mp3'
         ];
     }
 }
