@@ -145,9 +145,9 @@ class WordController extends Controller
     public function show($id)
     {
         $r=Word::find($id);
-        $carbon=Carbon::now()->toDateString();
-        Wordoftheday::where('updated_at','<',$carbon)->update(['count'=>0]);
         if(isset($r)){
+            $carbon=Carbon::now()->toDateString();
+            Wordoftheday::where('updated_at','<',$carbon)->update(['count'=>0]);
             $word=Word::find($id);
             $word->update([
                 'count'=>$word->count+1
@@ -174,7 +174,6 @@ class WordController extends Controller
 
     public function wordday(){
         $kunsozi=Wordoftheday::orderBy('count','desc')->first();
-        
         return response([
             'message'=>'word of the day',
             'data'=>new WorddayResource(Word::find($kunsozi->id))
