@@ -148,7 +148,7 @@ class WordController extends Controller
         if(isset($r)){
             $carbon=Carbon::now()->toDateString();
             Wordoftheday::where('updated_at','<',$carbon)->update(['count'=>0]);
-            $word=Word::where('id',$id)->first();
+            $word=Word::find($id);
             $word->update([
                 'count'=>$word->count+1
             ]);
