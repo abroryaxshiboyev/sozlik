@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateWordRequest;
 use App\Http\Resources\Word\CountWordResource;
 use App\Http\Resources\Word\DateResource;
 use App\Http\Resources\Word\WordCollection;
+use App\Http\Resources\Word\WorddayResource;
 use App\Http\Resources\Word\WordItemResource;
 use App\Http\Resources\Word\WordResource;
 use App\Models\Antonym;
@@ -15,6 +16,9 @@ use App\Models\Search;
 use App\Models\Synonym;
 use App\Models\Word;
 use App\Models\WordCategory;
+use App\Models\Wordoftheday;
+use Carbon\Carbon;
+use DateTimeZone;
 use Illuminate\Http\Request;
 
 class WordController extends Controller
@@ -141,11 +145,22 @@ class WordController extends Controller
     public function show($id)
     {
         $r=Word::find($id);
+        $carbon=Carbon::now()->toDateString();
+        Wordoftheday::where('updated_at','<',$carbon)->update(['count'=>0]);
         if(isset($r)){
             $word=Word::find($id);
             $word->update([
                 'count'=>$word->count+1
             ]);
+            $wordday=Wordoftheday::where('word_id',$id)->first();
+            if(isset($wordday)){
+                $wordday->update(['count'=>$wordday->count+1]);
+            }else {
+                Wordoftheday::create([
+                    'word_id'=>$id,
+                    'count'=>1
+                ]);
+            }
             return response([
                 'message'=>'one word',
                 'data'=>new WordResource(Word::find($id))]); 
@@ -155,6 +170,15 @@ class WordController extends Controller
                 'message'=>'id not found',
             ], 404);
         }
+    }
+
+    public function wordday(){
+        $kunsozi=Wordoftheday::orderBy('count','desc')->first();
+        
+        return response([
+            'message'=>'word of the day',
+            'data'=>new WorddayResource(Word::find($kunsozi->id))
+        ]);
     }
 
     /**
