@@ -174,9 +174,10 @@ class WordController extends Controller
 
     public function wordday(){
         $kunsozi=Wordoftheday::orderBy('count','desc')->first();
+        return $kunsozi;        
         return response([
             'message'=>'word of the day',
-            'data'=>new WorddayResource(Word::find($kunsozi->id))
+            'data'=>new WorddayResource(Word::find($kunsozi->word_id))
         ]);
     }
 
