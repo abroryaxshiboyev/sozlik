@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Word extends Model
 {
     use HasFactory;
-    protected $fillable=['latin','kiril','description_latin','description_kiril','audio'];
+    protected $fillable=['latin','kiril','description_latin','description_kiril','audio','count'];
 
     public function categories()
     {
