@@ -84,30 +84,30 @@ class WordController extends Controller
      */
     public function store(StoreWordRequest $request)
     {
-        // //sinonim so'zlar id sini validatsiya qilish
-        // if(isset($request->synonyms)){
-        //     $synonyms=$request->synonyms;
-        //     foreach ($synonyms as $key => $value) {
-        //         $request->validate([
-        //             "synonyms."."$key"=>'exists:words,id'
-        //         ]);
-        //     }
-        // }
-        // //antonim so'zlar id sini validatsiya qilish
-        // if(isset($request->antonyms)){
-        //     $antonyms=$request->antonyms;
-        //     foreach ($antonyms as $key => $value) {
-        //         $request->validate([
-        //             "antonyms."."$key"=>'exists:words,id'
-        //         ]);
-        //     }
-        // }
-        // //shu so'zlar tegishli bo'lgan kategoriyalar validatsiyasi
-        // foreach ($request->categories_id as $key => $value) {
-        //     $request->validate([
-        //         "categories_id."."$key" =>'exists:categories,id'
-        //     ]);
-        // }
+        //sinonim so'zlar id sini validatsiya qilish
+        if(isset($request->synonyms)){
+            $synonyms=$request->synonyms;
+            foreach ($synonyms as $key => $value) {
+                $request->validate([
+                    "synonyms."."$key"=>'exists:words,id'
+                ]);
+            }
+        }
+        //antonim so'zlar id sini validatsiya qilish
+        if(isset($request->antonyms)){
+            $antonyms=$request->antonyms;
+            foreach ($antonyms as $key => $value) {
+                $request->validate([
+                    "antonyms."."$key"=>'exists:words,id'
+                ]);
+            }
+        }
+        //shu so'zlar tegishli bo'lgan kategoriyalar validatsiyasi
+        foreach ($request->categories_id as $key => $value) {
+            $request->validate([
+                "categories_id."."$key" =>'exists:categories,id'
+            ]);
+        }
         //audio bor yo'qligini tekshirish
         if(isset($request->audio)){
             //audioni vaqt bo'yicha nomlash
@@ -121,10 +121,10 @@ class WordController extends Controller
         }
         //so'zni create qilish
         $created_word=Word::create($result);
-        // $word=Word::find($created_word->id);
-        // $word->categories()->sync($request['categories_id']);
-        // $word->synonyms()->sync($request['synonyms']);
-        // $word->antonyms()->sync($request['antonyms']);
+        $word=Word::find($created_word->id);
+        $word->categories()->sync($request['categories_id']);
+        $word->synonyms()->sync($request['synonyms']);
+        $word->antonyms()->sync($request['antonyms']);
 
         return response([
             'message'=>"created word",
