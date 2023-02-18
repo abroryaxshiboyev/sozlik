@@ -18,9 +18,7 @@ class CategoryWordResource extends JsonResource
             'id' => $this->id,
             'latin' => $this->latin,
             'kiril' => $this->kiril,
-            'description_latin'=>$this->description_latin,
-            'description_kiril'=>$this->description_kiril,
-            'audio' => $this->audio,
+            'audio' => env('APP_URL')."/".$this->audio,
         ];
     }
 }
