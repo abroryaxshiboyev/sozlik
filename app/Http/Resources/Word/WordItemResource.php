@@ -21,7 +21,7 @@ class WordItemResource extends JsonResource
             'description_latin'=>$this->description_latin,
             'description_kiril'=>$this->description_kiril,
             'count'=>$this->count,
-            'audio'=>env('APP_URL')."/". $this->audio,
+            'audio'=>$this->audio,
             'categories'=>WordCategoryResource::collection($this->categories),
         ];
     }

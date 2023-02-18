@@ -118,7 +118,7 @@ class WordController extends Controller
             $audioName=time().".".$request->audio->getClientOriginalExtension();
             $request->audio->move(public_path('/audio'),$audioName);
             $result = $request->validated();
-            $result['audio'] = 'audio/'.$audioName;
+            $result['audio'] = $audioName;
         }
         else{
             $result=$request->validated();
@@ -226,7 +226,7 @@ class WordController extends Controller
                 $audioName=time().".".$request->audio->getClientOriginalExtension();
                 $request->audio->move(public_path('/audio'),$audioName);
                 $result = $request->validated();
-                $result['audio'] = 'audio/'.$audioName;
+                $result['audio'] = $audioName;
             }else
                 $result=$request->validated();
             //update qilish
