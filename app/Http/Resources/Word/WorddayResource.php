@@ -21,6 +21,7 @@ class WorddayResource extends JsonResource
             'description_latin'=>$this->description_latin,
             'description_kiril'=>$this->description_kiril,
             'audio'=>$this->audio,
+            'created_at'=>$this->created_at,
             'categories'=>WordCategoryResource::collection($this->categories),
         ];
     }

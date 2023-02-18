@@ -22,6 +22,7 @@ class WordResource extends JsonResource
             'description_kiril'=>$this->description_kiril,
             'count'=>$this->count,
             'audio'=>$this->audio,
+            'created_at'=>$this->created_at,
             'categories'=>WordCategoryResource::collection($this->categories),
             'synonyms'=>SynonymResource::collection($this->synonyms),
             'antonyms'=>SynonymResource::collection($this->antonyms)
