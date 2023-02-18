@@ -9,11 +9,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Word extends Model
 {
     use HasFactory, SoftDeletes;
-    protected $fillable=['latin','kiril','description_latin','description_kiril','audio','count'];
+    protected $fillable=['user_id','latin','kiril','description_latin','description_kiril','audio','count'];
 
     public function categories()
     {
-        return $this->belongsToMany(Category::class,'word_categories')->as('categories');
+        return $this->belongsToMany(Category::class,'word_categories')->as('categories')->withTrashed();
     }
     public function synonyms()
     {

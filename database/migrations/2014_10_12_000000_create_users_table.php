@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('phone')->unique();
             $table->string('password');
             $table->rememberToken();
+            $table->softDeletes(); 
             $table->timestamps();
         });
         DB::table('users')->insert([

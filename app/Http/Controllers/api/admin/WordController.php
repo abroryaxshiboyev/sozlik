@@ -88,6 +88,7 @@ class WordController extends Controller
      */
     public function store(StoreWordRequest $request)
     {
+        $user=auth()->user();
         //sinonim so'zlar id sini validatsiya qilish
         if(isset($request->synonyms)){
             $synonyms=$request->synonyms;
@@ -123,6 +124,7 @@ class WordController extends Controller
         else{
             $result=$request->validated();
         }
+        $result['user_id']=$user->id;
         //so'zni create qilish
         $created_word=Word::create($result);
         $word=Word::find($created_word->id);

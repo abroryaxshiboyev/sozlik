@@ -16,7 +16,8 @@ class SearchItemResource extends JsonResource
     {
         return [
             'id'=>$this->id,
-            'word_name'=>$this->word_name
+            'latin'=>$this->latin,
+            'kiril'=>$this->kiril,
         ];
     }
 }

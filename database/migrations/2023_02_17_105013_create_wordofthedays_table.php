@@ -16,7 +16,7 @@ class CreateWordofthedaysTable extends Migration
     {
         Schema::create('wordofthedays', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Word::class)->constrained();
+            $table->foreignIdFor(Word::class)->constrained()->cascadeOnDelete();
             $table->bigInteger('count')->default(0);
             $table->timestamps();
             $table->softDeletes(); 
