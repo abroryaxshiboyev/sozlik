@@ -31,7 +31,7 @@ class SearchController extends Controller
         ]);
     }
     public function words2(){
-        $search=Word::get();
+        $search=Search::get();
         return response([
             'message'=>'all searching words',
             'data'=>SearchItemResource::collection($search)
