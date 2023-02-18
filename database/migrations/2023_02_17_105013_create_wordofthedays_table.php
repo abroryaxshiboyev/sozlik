@@ -19,6 +19,7 @@ class CreateWordofthedaysTable extends Migration
             $table->foreignIdFor(Word::class)->constrained();
             $table->bigInteger('count')->default(0);
             $table->timestamps();
+            $table->softDeletes(); 
         });
     }
 

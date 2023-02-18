@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Word extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
     protected $fillable=['latin','kiril','description_latin','description_kiril','audio','count'];
 
     public function categories()

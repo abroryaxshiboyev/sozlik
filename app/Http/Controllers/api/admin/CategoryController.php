@@ -137,13 +137,13 @@ class CategoryController extends Controller
     {
         $request=Category::find($id);
         if(isset($request)){
-            $pivot=WordCategory::where('category_id',$id)->get();
-            if(!empty($pivot[0])){
-                return response([
-                    'message'=>'there are words belonging to this category',
-                    'data'=>false
-                ],200);
-        }
+        //     $pivot=WordCategory::where('category_id',$id)->get();
+        //     if(!empty($pivot[0])){
+        //         return response([
+        //             'message'=>'there are words belonging to this category',
+        //             'data'=>false
+        //         ],200);
+        // }
         $request->delete(); 
         
         return response([

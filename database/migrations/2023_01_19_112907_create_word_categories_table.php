@@ -17,6 +17,7 @@ class CreateWordCategoriesTable extends Migration
     {
         Schema::create('word_categories', function (Blueprint $table) {
             $table->id();
+            
             $table->foreignIdFor(Category::class)->constrained();
             $table->foreignIdFor(Word::class)->constrained();
             $table->softDeletes(); 
