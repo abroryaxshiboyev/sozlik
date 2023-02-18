@@ -15,7 +15,8 @@ class CreateSearchesTable extends Migration
     {
         Schema::create('searches', function (Blueprint $table) {
             $table->id();
-            $table->text('word_name');
+            $table->text('latin');
+            $table->text('kiril');
             $table->timestamps();
             $table->softDeletes(); 
         });

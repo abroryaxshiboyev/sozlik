@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Search extends Model
 {
     use HasFactory;
-    protected $fillable=['word_name'];
+    protected $fillable=['latin','kiril'];
 }

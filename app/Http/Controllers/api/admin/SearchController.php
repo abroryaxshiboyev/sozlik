@@ -21,10 +21,12 @@ class SearchController extends Controller
 {
     public function store(Request $request){
         $request->validate([
-            'word_name'=>'required',
+            'latin'=>'required',
+            'kiril'=>'required',
         ]);
         Search::create([
-            'word_name' => $request->word_name,
+            'latin'=>$request->latin,
+            'kiril'=>$request->kiril,
         ]);
         return response([
             'message' =>'searching created successfully'
