@@ -124,7 +124,8 @@ class WordController extends Controller
         else{
             $result=$request->validated();
         }
-        $result['user_id']=$user->id;
+        //$result['user_id']=$user->id;
+        $result['user_id']=1;
         //so'zni create qilish
         $created_word=Word::create($result);
         $word=Word::find($created_word->id);
