@@ -61,13 +61,13 @@ class SearchController extends Controller
                     $letter=$letters[1]['latin'][0];
                 }
                 $array=[];
+                return $words;
                 foreach ($words as $word){
                     $str=$word['latin'][0];
                     if($letter==$str)
                     
                         $array[]=$word;
                     }
-                    return $array;
                 $offset = ($page * $perPage) - $perPage;
 
                 $requestData =  new LengthAwarePaginator(
@@ -76,7 +76,6 @@ class SearchController extends Controller
                 $perPage,
                 $page
                 );
-                return $requestData;
             }else{
                 $requestData=Word::where('latin', 'LIKE', $search.'%')->orWhere('kiril', 'LIKE', $search.'%')->paginate($perPage);   
             }
