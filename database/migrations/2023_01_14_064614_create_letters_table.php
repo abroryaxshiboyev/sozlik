@@ -18,6 +18,7 @@ class CreateLettersTable extends Migration
             $table->id();
             $table->text('latin');
             $table->text('kiril');
+            $table->softDeletes();
             $table->timestamps();
         });
         DB::table('letters')->insert(['latin' => 'a','kiril'=>'а']);
