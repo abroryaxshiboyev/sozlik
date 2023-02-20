@@ -43,12 +43,12 @@ Route::post('authenticate',[AuthController::class,'authenticate']);
 
 Route::middleware('auth:sanctum')->group(function(){
 
-// //auth    
-// Route::post('logout',[AuthController::class,'logout']);
-// Route::get('check',[AuthController::class,'check']);
-// //admin create and delete
-// Route::post('admins',[AuthController::class,'createAdmin']);
-// Route::delete('admins/{id}',[AuthController::class,'deleteAdmin']);
+//auth    
+Route::post('logout',[AuthController::class,'logout']);
+Route::get('check',[AuthController::class,'check']);
+//admin create and delete
+Route::post('admins',[AuthController::class,'createAdmin']);
+Route::delete('admins/{id}',[AuthController::class,'deleteAdmin']);
 
 // //categories
 // Route::get('categoriesdate',[CategoryController::class,'sortDate']);
