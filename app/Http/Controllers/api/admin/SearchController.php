@@ -51,7 +51,7 @@ class SearchController extends Controller
         elseif($search=$request->input('letter')){
             $perPage = $request->input('limit', 10);
             $page = $request->input('page', 1);
-            $letters=Letter::where('latin',$search)->orWhere('kiril', 'LIKE', $search.'%')->get();
+            $letters=Letter::where('latin', 'LIKE', $search.'%')->orWhere('kiril', 'LIKE', $search.'%')->get();
             $count=count($letters);
             if($count==2){
                 $words=Word::where('latin', 'LIKE', $search.'%')->orWhere('kiril', 'LIKE', $search.'%')->get();
