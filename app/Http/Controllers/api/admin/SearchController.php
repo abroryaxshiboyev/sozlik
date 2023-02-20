@@ -63,7 +63,6 @@ class SearchController extends Controller
                 $array=[];
                 foreach ($words as $word){
                     $str=$word['latin'][0];
-                    return $letter==$str;
                     if($letter==$str)
                     
                         $array[]=$word;
@@ -77,6 +76,7 @@ class SearchController extends Controller
                 $perPage,
                 $page
                 );
+                return $requestData;
             }else{
                 $requestData=Word::where('latin', 'LIKE', $search.'%')->orWhere('kiril', 'LIKE', $search.'%')->paginate($perPage);   
             }
