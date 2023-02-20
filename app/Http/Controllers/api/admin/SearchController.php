@@ -60,6 +60,7 @@ class SearchController extends Controller
                 }else{
                     $letter=$letters[1]['latin'][0];
                 }
+                return $letter;
                 $array=[];
                 foreach ($words as $word){
                     $str=$word['latin'][0];
