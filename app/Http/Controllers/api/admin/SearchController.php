@@ -61,7 +61,6 @@ class SearchController extends Controller
                     $letter=$letters[1]['latin'][0];
                 }
                 $array=[];
-                return $words;
                 foreach ($words as $word){
                     $str=$word['latin'][0];
                     if($letter==$str)
