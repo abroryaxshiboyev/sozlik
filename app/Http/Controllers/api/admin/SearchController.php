@@ -56,9 +56,9 @@ class SearchController extends Controller
             if($count==2){
                 $words=Word::where('latin', 'LIKE', $search.'%')->orWhere('kiril', 'LIKE', $search.'%')->get();
                 if ($letters[0]['latin']==$search) {
-                    $letter=$letters[0]['latin'][0];
+                    $letter=$letters[0]['latin'];
                 }else{
-                    $letter=$letters[1]['latin'][0];
+                    $letter=$letters[1]['latin'];
                 }
                 $array=[];
                 foreach ($words as $word){
