@@ -53,6 +53,7 @@ class SearchController extends Controller
             $page = $request->input('page', 1);
             $letters=Letter::where('latin', $search)->orWhere('kiril', $search)->get();
             $count=count($letters);
+            return $count;
             if($count==2){
                 $words=Word::where('latin', 'LIKE', $search.'%')->orWhere('kiril', 'LIKE', $search.'%')->get();
                 if ($letters[0]['latin']==$search) {
