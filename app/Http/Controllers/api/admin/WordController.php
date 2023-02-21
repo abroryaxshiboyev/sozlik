@@ -107,17 +107,17 @@ class WordController extends Controller
                 ]);
             }
         }
-        // //shu so'zlar tegishli bo'lgan kategoriyalar validatsiyasi
-        // foreach ($request->categories_id as $key => $value) {
-        //     $request->validate([
-        //         "categories_id."."$key" =>'exists:categories,id'
-        //     ]);
-        // }
+        //shu so'zlar tegishli bo'lgan kategoriyalar validatsiyasi
+        foreach ($request->categories_id as $key => $value) {
+            $request->validate([
+                "categories_id."."$key" =>'exists:categories,id'
+            ]);
+        }
         //audio bor yo'qligini tekshirish
         if(isset($request->audio)){
             //audioni vaqt bo'yicha nomlash
-            $audioName=time().".".$request->file('audio')->getClientOriginalExtension();
-            $request->file('audio')->move(public_path('/audio'),$audioName);
+            $audioName=time().".".$request->audio->getClientOriginalExtension();
+            $request->audio->move(public_path('/audio'),$audioName);
             $result = $request->validated();
             $result['audio'] = $audioName;
         }
