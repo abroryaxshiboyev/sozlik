@@ -65,25 +65,18 @@ class CategoryController extends Controller
     public function show($id,Request $request)
     {
         $limit = $request->input('limit', 10);
-        $words=Category::find($id);
+        $words=Category::findOrFail($id);
 
-        if(isset($words)){
-            $words->setRelation('words', 
-            $words->words()->orderBy('latin')->paginate($limit)
-            );
-            $count=WordCategory::where('category_id',$id)->count();
+        $words->setRelation('words', 
+        $words->words()->orderBy('latin')->paginate($limit)
+        );
+        $count=WordCategory::where('category_id',$id)->count();
 
-            return response([
-                'message'=>'one category',
-                'data'=>new CategoryResource($words),
-                'words_total'=>$count
+        return response([
+            'message'=>'one category',
+            'data'=>new CategoryResource($words),
+            'words_total'=>$count
             ]); 
-        }
-        else{
-            return response([
-                'message'=>'id not found'
-            ], 404);
-        }
     }
     public function show2($id,Request $request)
     {
