@@ -114,10 +114,10 @@ class WordController extends Controller
             ]);
         }
         //audio bor yo'qligini tekshirish
-        if(isset($request->audio)){
+        if(isset($request->file('audio'))){
             //audioni vaqt bo'yicha nomlash
-            $audioName=time().".".$request->audio->getClientOriginalExtension();
-            $request->audio->move(public_path('/audio'),$audioName);
+            $audioName=time().".".$request->file('audio')->getClientOriginalExtension();
+            $request->file('audio')->move(public_path('/audio'),$audioName);
             $result = $request->validated();
             $result['audio'] = $audioName;
         }
