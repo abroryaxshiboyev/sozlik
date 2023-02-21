@@ -49,37 +49,9 @@ class SearchController extends Controller
             ->orWhereRaw("kiril LIKE '%". $search . "%'");    
         }
         elseif($search=$request->input('letter')){
-            $perPage = $request->input('limit', 10);
-            $page = $request->input('page', 1);
-            $letters=Letter::where('latin', $search)->orWhere('kiril', $search)->get();
-            $count=count($letters);
-            if($count==2){
-                $words=Word::where('latin', 'LIKE', $search.'%')->orWhere('kiril', 'LIKE', $search.'%')->get();
-                if ($letters[0]['latin']==$search) {
-                    $letter=$letters[0]['latin'][0];
-                }else{
-                    $letter=$letters[1]['latin'][0];
-                }
-                $array=[];
-                foreach ($words as $word){
-                    $str=$word['latin'][0];
-                    if($letter==$str)
-                    
-                        $array[]=$word;
-                    }
-                $offset = ($page * $perPage) - $perPage;
-
-                $requestData =  new LengthAwarePaginator(
-                array_slice($array, $offset, $perPage, true),
-                count($array),
-                $perPage,
-                $page
-                );
-            }else{
-                $requestData=Word::where('latin', 'LIKE', $search.'%')->orWhere('kiril', 'LIKE', $search.'%')->paginate($perPage);   
-            }
-            
-        return response(new WordSearchCollection($requestData));
+            $query
+            ->whereRaw("latin LIKE '". $search . "%'")
+            ->orWhereRaw("kiril LIKE '". $search . "%'");
             
         }elseif ($request->input('sortBy')=='count') {
             $query
