@@ -109,16 +109,15 @@ class WordController extends Controller
             ]);
         }
         //audio bor yo'qligini tekshirish
+        $result = $request->validated();
         if(isset($request->audio)){
             //audioni vaqt bo'yicha nomlash
             $audioName=time().".".$request->audio->getClientOriginalExtension();
             $request->audio->move(public_path('/audio'),$audioName);
-            $result = $request->validated();
+            
             $result['audio'] = $audioName;
         }
-        else{
-            $result=$request->validated();
-        }
+       
         //$result['user_id']=$user->id;
         $result['user_id']=1;
         //so'zni create qilish
