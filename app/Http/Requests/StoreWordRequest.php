@@ -24,7 +24,7 @@ class StoreWordRequest extends FormRequest
     public function rules()
     {
         return [
-            //'categories_id'=>'required',
+            'categories_id'=>'array|min:1',
             'latin'=>'required',
             'kiril'=>'required',
             'description_latin'=>'required',
