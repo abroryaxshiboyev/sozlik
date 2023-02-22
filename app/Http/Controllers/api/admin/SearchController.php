@@ -3,19 +3,14 @@
 namespace App\Http\Controllers\api\admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\SearchCollection;
 use App\Http\Resources\Word\SearchCollection as WordSearchCollection;
 use App\Http\Resources\Word\SearchItemResource;
 use App\Http\Resources\Word\WordResource;
-use App\Models\Letter;
 use App\Models\Search;
 use App\Models\Word;
 use App\Models\Wordoftheday;
 use Carbon\Carbon;
-use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Nette\Utils\Paginator as UtilsPaginator;
 
 class SearchController extends Controller
 {

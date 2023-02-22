@@ -12,7 +12,6 @@ use App\Http\Resources\Category\DateResource;
 use App\Http\Resources\Category\OneCategoryResource;
 use App\Models\Category;
 use App\Models\WordCategory;
-use Countable;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller

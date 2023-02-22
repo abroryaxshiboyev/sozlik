@@ -24,11 +24,11 @@ class UpdateWordRequest extends FormRequest
     public function rules()
     {
         return [
-            'categories_id'=>'required|array|min:1',
-            'latin'=>'required',
-            'kiril'=>'required',
-            'description_latin'=>'required',
-            'description_kiril'=>'required',
+            'categories_id'=>'array|min:1',
+            'latin'=>'string',
+            'kiril'=>'string',
+            'description_latin'=>'string',
+            'description_kiril'=>'string',
             'audio'=> 'nullable|mimes:ogg,mp3|max:10000'
         ];
     }
