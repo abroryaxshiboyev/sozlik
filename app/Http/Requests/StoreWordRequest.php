@@ -24,11 +24,12 @@ class StoreWordRequest extends FormRequest
     public function rules()
     {
         return [
-            //'categories_id'=>'required',
+            'categories_id'=>'required|array|min:1',
             'latin'=>'required',
             'kiril'=>'required',
             'description_latin'=>'required',
             'description_kiril'=>'required',
+            'audio'=> 'nullable|mimes:ogg,mp3|max:10000'
         ];
     }
 }
