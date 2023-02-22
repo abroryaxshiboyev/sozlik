@@ -118,7 +118,7 @@ class WordController extends Controller
         if(isset($request->audio)){
             //audioni vaqt bo'yicha nomlash
             $audioName=time().".".$request->audio->getClientOriginalExtension();
-            $request->audio->move(public_path('/audio'),$audioName);
+            $request->audio->move(public_path('audio/'),$audioName);
             
             $result['audio'] = $audioName;
         }
