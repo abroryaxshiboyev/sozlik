@@ -106,13 +106,13 @@ class WordController extends Controller
             }
         }
         //shu so'zlar tegishli bo'lgan kategoriyalar validatsiyasi
-        // if(isset($request->categories_id)){
-        //     foreach ($request->categories_id as $key => $value) {
-        //         $request->validate([
-        //             "categories_id."."$key" =>'exists:categories,id'
-        //         ]);
-        //     }
-        // }
+        if(isset($request->categories_id)){
+            foreach ($request->categories_id as $key => $value) {
+                $request->validate([
+                    "categories_id."."$key" =>'exists:categories,id'
+                ]);
+            }
+        }
         //audio bor yo'qligini tekshirish
         $result = $request->validated();
         if(isset($request->audio)){
@@ -146,25 +146,32 @@ class WordController extends Controller
      */
     public function show($id)
     {
-        $r=Word::findOrFail($id);
-        $carbon=Carbon::now()->toDateString();
-        Wordoftheday::where('updated_at','<',$carbon)->update(['count'=>0]);
-        $word=Word::find($id);
-        $word->update([
-            'count'=>$word->count+1
-        ]);
-        $wordday=Wordoftheday::where('word_id',$id)->first();
-        if(isset($wordday)){
-            $wordday->update(['count'=>$wordday->count+1]);
-        }else {
-            Wordoftheday::create([
-                'word_id'=>$id,
-                'count'=>1
+        $r=Word::find($id);
+        if(isset($r)){
+            $carbon=Carbon::now()->toDateString();
+            Wordoftheday::where('updated_at','<',$carbon)->update(['count'=>0]);
+            $word=Word::find($id);
+            $word->update([
+                'count'=>$word->count+1
             ]);
+            $wordday=Wordoftheday::where('word_id',$id)->first();
+            if(isset($wordday)){
+                $wordday->update(['count'=>$wordday->count+1]);
+            }else {
+                Wordoftheday::create([
+                    'word_id'=>$id,
+                    'count'=>1
+                ]);
+            }
+            return response([
+                'message'=>'one word',
+                'data'=>new WordResource(Word::find($id))]); 
         }
-         return response([
-            'message'=>'one word',
-            'data'=>new WordResource(Word::find($id))]); 
+        else{
+            return response([
+                'message'=>'id not found',
+            ], 404);
+        } 
     }
 
     public function wordday(){
@@ -207,32 +214,37 @@ class WordController extends Controller
             ]);
         }
 
-        $audio=Word::findOrFail($id);
-        //audio bor yo'qligini tekshirish
-        if(isset($audio->audio))
-            unlink($audio->audio);
-        if(isset($request->audio)){
-            //audioni vaqt bo'yicha nomlash
-            $audioName=time().".".$request->audio->getClientOriginalExtension();
-            $request->audio->move(public_path('/audio'),$audioName);
-            $result = $request->validated();
-            $result['audio'] = $audioName;
+        $audio=Word::find($id);
+        if(isset($audio)){
+            //audio bor yo'qligini tekshirish
+            if(isset($audio->audio))
+                unlink($audio->audio);
+            if(isset($request->audio)){
+                //audioni vaqt bo'yicha nomlash
+                $audioName=time().".".$request->audio->getClientOriginalExtension();
+                $request->audio->move(public_path('/audio'),$audioName);
+                $result = $request->validated();
+                $result['audio'] = $audioName;
+            }else
+                $result=$request->validated();
+            //update qilish
+            Word::find($id)->update($result);
+            $word=Word::find($id);
+    
+            $word->categories()->sync($request['categories_id']);
+
+            $word->synonyms()->sync($request['synonyms']);
+
+            $word->antonyms()->sync($request['antonyms']);
+
+            return response([
+                'message'=>"updated successfully",
+                'data'=>new WordResource($word)
+            ]);
         }else
-            $result=$request->validated();
-        //update qilish
-        Word::find($id)->update($result);
-        $word=Word::find($id);
-  
-        $word->categories()->sync($request['categories_id']);
-
-        $word->synonyms()->sync($request['synonyms']);
-
-        $word->antonyms()->sync($request['antonyms']);
-
-        return response([
-            'message'=>"updated successfully",
-            'data'=>new WordResource($word)
-        ]);
+            return response([
+                'message'=>"id not found",
+            ],404);
     }
 
     /**
@@ -243,29 +255,35 @@ class WordController extends Controller
      */
     public function destroy($id)
     {
-        $request=Word::findOrFail($id);
-        //pivot tablitsadan category larni o'chirish
-        $categories=WordCategory::where('word_id',$id)->get();
-        foreach ($categories as $key => $value) {
-            $pivot_id=WordCategory::find($value->id)->delete();
-        }
+        $request=Word::find($id);
+        if(isset($request)){
+            //pivot tablitsadan category larni o'chirish
+            $categories=WordCategory::where('word_id',$id)->get();
+            foreach ($categories as $key => $value) {
+                $pivot_id=WordCategory::find($value->id)->delete();
+            }
 
-        //pivot tablitsadan sinonim larni o'chirish
-        Synonym::where('synonym_word_id',$id)->orWhere('word_id',$id)->delete();
-        
-        //pivot tablitsadan antonim larni o'chirish
-        Antonym::where('antonym_word_id',$id)->orWhere('word_id',$id)->delete();
-                        
-        //audio faylni o'chirish
-        if(isset($request->audio))
-            unlink($request->audio);
-        //o'chirish
-        $request->delete();
+            //pivot tablitsadan sinonim larni o'chirish
+            Synonym::where('synonym_word_id',$id)->orWhere('word_id',$id)->delete();
             
-        
-        return response([
-            'message'=>"deleted",
-        ],200);
+            //pivot tablitsadan antonim larni o'chirish
+            Antonym::where('antonym_word_id',$id)->orWhere('word_id',$id)->delete();
+                            
+            //audio faylni o'chirish
+            if(isset($request->audio))
+                unlink($request->audio);
+            //o'chirish
+            $request->delete();
+                
+            
+            return response([
+                'message'=>"deleted",
+            ],200);
+        }
+        else
+            return response([
+                'message'=>"id not found",
+            ],404);
     }
 
     
