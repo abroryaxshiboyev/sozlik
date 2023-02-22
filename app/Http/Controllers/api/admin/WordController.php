@@ -88,25 +88,30 @@ class WordController extends Controller
     {
         $user=auth()->user();
         //sinonim so'zlar id sini validatsiya qilish
+        if($request->synonyms){
             $synonyms=$request->synonyms;
             foreach ($synonyms as $key => $value) {
                 $request->validate([
                     "synonyms."."$key"=>'exists:words,id'
                 ]);
             }
+        }
         //antonim so'zlar id sini validatsiya qilish
-    
+        if($request->antonyms){
             $antonyms=$request->antonyms;
             foreach ($antonyms as $key => $value) {
                 $request->validate([
                     "antonyms."."$key"=>'exists:words,id'
                 ]);
             }
+        }
         //shu so'zlar tegishli bo'lgan kategoriyalar validatsiyasi
-        foreach ($request->categories_id as $key => $value) {
-            $request->validate([
-                "categories_id."."$key" =>'exists:categories,id'
-            ]);
+        if($request->categories_id){
+            foreach ($request->categories_id as $key => $value) {
+                $request->validate([
+                    "categories_id."."$key" =>'exists:categories,id'
+                ]);
+            }
         }
         //audio bor yo'qligini tekshirish
         $result = $request->validated();
