@@ -91,7 +91,8 @@ class WordController extends Controller
         $user=auth()->user();
         //sinonim so'zlar id sini validatsiya qilish
         if($request->synonyms){
-            $synonyms=explode(',',$request->synonyms);
+            $request['synonyms']=explode(',',$request->synonyms);
+            $synonyms=$request['synonyms'];
             foreach ($synonyms as $key => $value) {
                 $request->validate([
                     "synonyms."."$key"=>'exists:words,id'
@@ -100,7 +101,8 @@ class WordController extends Controller
         }
         //antonim so'zlar id sini validatsiya qilish
         if($request->antonyms){
-            $antonyms=explode(',',$request->antonyms);
+            $request['antonyms']=explode(',',$request->antonyms);
+            $antonyms=$request['antonyms'];
             foreach ($antonyms as $key => $value) {
                 $request->validate([
                     "antonyms."."$key"=>'exists:words,id'
