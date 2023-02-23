@@ -276,8 +276,8 @@ class WordController extends Controller
             Antonym::where('antonym_word_id',$id)->orWhere('word_id',$id)->delete();
                             
             //audio faylni o'chirish
-            if(isset($request->audio))
-                unlink('audio/'.$request->audio);
+            // if(isset($request->audio))
+            //     unlink('audio/'.$request->audio);
             //o'chirish
             $request->delete();
                 
