@@ -273,7 +273,7 @@ class WordController extends Controller
                             
             //audio faylni o'chirish
             if(isset($request->audio))
-                unlink($request->audio);
+                unlink('audio/'.$request->audio);
             //o'chirish
             $request->delete();
                 
