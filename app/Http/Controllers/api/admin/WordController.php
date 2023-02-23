@@ -86,12 +86,12 @@ class WordController extends Controller
      */
     public function store(StoreWordRequest $request)
     {
-        $antonyms=explode(",",$request->antonyms);
-        return $antonyms;
+        
+        
         $user=auth()->user();
         //sinonim so'zlar id sini validatsiya qilish
         if($request->synonyms){
-            $synonyms=$request->synonyms;
+            $synonyms=explode(',',$request->synonyms);
             foreach ($synonyms as $key => $value) {
                 $request->validate([
                     "synonyms."."$key"=>'exists:words,id'
@@ -100,7 +100,7 @@ class WordController extends Controller
         }
         //antonim so'zlar id sini validatsiya qilish
         if($request->antonyms){
-            $antonyms=$request->antonyms;
+            $antonyms=explode(',',$request->antonyms);
             foreach ($antonyms as $key => $value) {
                 $request->validate([
                     "antonyms."."$key"=>'exists:words,id'
