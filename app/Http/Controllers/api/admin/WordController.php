@@ -86,6 +86,8 @@ class WordController extends Controller
      */
     public function store(StoreWordRequest $request)
     {
+        $antonyms=explode(",",$request->antonyms);
+        return $antonyms;
         $user=auth()->user();
         //sinonim so'zlar id sini validatsiya qilish
         if($request->synonyms){
