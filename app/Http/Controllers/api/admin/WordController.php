@@ -106,13 +106,13 @@ class WordController extends Controller
             }
         }
         //shu so'zlar tegishli bo'lgan kategoriyalar validatsiyasi
-        if(isset($request->categories_id)){
-            foreach ($request->categories_id as $key => $value) {
-                $request->validate([
-                    "categories_id."."$key" =>'exists:categories,id'
-                ]);
-            }
-        }
+        // if(isset($request->categories_id)){
+        //     foreach ($request->categories_id as $key => $value) {
+        //         $request->validate([
+        //             "categories_id."."$key" =>'exists:categories,id'
+        //         ]);
+        //     }
+        // }
         //audio bor yo'qligini tekshirish
         $result = $request->validated();
         if(isset($request->audio)){
@@ -128,7 +128,7 @@ class WordController extends Controller
         //so'zni create qilish
         $created_word=Word::create($result);
         $word=Word::find($created_word->id);
-        //$word->categories()->sync($request['categories_id']);
+        $word->categories()->sync([$request['categories_id']]);
         $word->synonyms()->sync($request['synonyms']);
         $word->antonyms()->sync($request['antonyms']);
 
