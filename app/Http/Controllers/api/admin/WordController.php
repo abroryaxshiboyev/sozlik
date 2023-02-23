@@ -262,7 +262,7 @@ class WordController extends Controller
         $request=Word::find($id);
         if(isset($request)){
             //pivot tablitsadan category larni o'chirish
-            $categories=WordCategory::where('word_id',$id)->delete();
+            WordCategory::where('word_id',$id)->delete();
 
 
             //pivot tablitsadan sinonim larni o'chirish
