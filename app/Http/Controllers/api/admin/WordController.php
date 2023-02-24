@@ -222,28 +222,29 @@ class WordController extends Controller
         //     ]);
         // }
 
-        $audio=Word::find($id);
-        if(isset($audio)){
-            //audio bor yo'qligini tekshirish
-            if(isset($audio->audio))
-                unlink('audio/'.$audio->audio);
-            if(isset($request->audio)){
-                //audioni vaqt bo'yicha nomlash
-                $audioName=time().".".$request->audio->getClientOriginalExtension();
-                $request->audio->move(public_path('/audio'),$audioName);
-                $result = $request->validated();
-                $result['audio'] = $audioName;
+            $audio=Word::find($id);
+            if(isset($audio)){
+                //audio bor yo'qligini tekshirish
+                if(isset($request->audio)){
+                    if(isset($audio->audio))
+                        unlink('audio/'.$audio->audio);
+                    //audioni vaqt bo'yicha nomlash
+            
+                    $audioName=time().".".$request->audio->getClientOriginalExtension();
+                    $request->audio->move(public_path('/audio'),$audioName);
+                    $result = $request->validated();
+                    $result['audio'] = $audioName;
             }else
                 $result=$request->validated();
             //update qilish
             Word::find($id)->update($result);
             $word=Word::find($id);
-    
-            $word->categories()->sync([$request['categories_id']]);
-
-            $word->synonyms()->sync($request['synonyms']);
-
-            $word->antonyms()->sync($request['antonyms']);
+            if($request->categories_id)
+                $word->categories()->sync([$request['categories_id']]);
+            if($request->synonyms)
+                $word->synonyms()->sync($request['synonyms']);
+            if($request->antonyms)
+                $word->antonyms()->sync($request['antonyms']);
 
             return response([
                 'message'=>"updated successfully",
