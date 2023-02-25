@@ -193,7 +193,7 @@ class WordController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateWordRequest $request, $id)
+    public function update(UpdateWordRequest $request)
     {
          //sinonim so'zlar id sini validatsiya qilish
         if($request->synonyms){
@@ -222,7 +222,7 @@ class WordController extends Controller
         //     ]);
         // }
 
-            $audio=Word::find($id);
+            $audio=Word::find($request->id);
             if(isset($audio)){
                 //audio bor yo'qligini tekshirish
                 if(isset($request->audio)){
@@ -237,8 +237,8 @@ class WordController extends Controller
             }else
                 $result=$request->validated();
             //update qilish
-            Word::find($id)->update($result);
-            $word=Word::find($id);
+            Word::find($request->id)->update($result);
+            $word=Word::find($request->id);
             if($request->categories_id)
                 $word->categories()->sync([$request['categories_id']]);
             if($request->synonyms)
