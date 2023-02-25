@@ -222,7 +222,7 @@ class WordController extends Controller
         //     ]);
         // }
 
-            $audio=Word::find($request->id);
+            $audio=Word::find(intval($request->id));
             if(isset($audio)){
                 //audio bor yo'qligini tekshirish
                 if(isset($request->audio)){
