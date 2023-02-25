@@ -16,7 +16,6 @@ use App\Models\Word;
 use App\Models\WordCategory;
 use App\Models\Wordoftheday;
 use Carbon\Carbon;
-use DateTimeZone;
 use Illuminate\Http\Request;
 
 class WordController extends Controller
@@ -86,7 +85,6 @@ class WordController extends Controller
      */
     public function store(StoreWordRequest $request)
     {
-        
         
         $user=auth()->user();
         //sinonim so'zlar id sini validatsiya qilish

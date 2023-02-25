@@ -24,7 +24,7 @@ class UpdateWordRequest extends FormRequest
     public function rules()
     {
         return [
-            'categories_id'=>'integer',
+            'categories_id'=>'exists:categories,id',
             'latin'=>'string',
             'kiril'=>'string',
             'description_latin'=>'string',
