@@ -26,10 +26,10 @@ class StoreWordRequest extends FormRequest
         return [
             'categories_id'=>'required|exists:categories,id',
             'latin'=>'required',
-            'kiril'=>'required',
+            'kiril'=>'required|unique:words,kiril',
             'description_latin'=>'required',
             'description_kiril'=>'required',
-            'audio'=> 'nullable|mimes:ogg,mp3|max:10000'
+            'audio'=> 'nullable|mimes:ogg,mp3,wav|max:10000'
         ];
     }
 }
