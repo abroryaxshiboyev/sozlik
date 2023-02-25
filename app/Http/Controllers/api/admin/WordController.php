@@ -125,8 +125,8 @@ class WordController extends Controller
             $result['audio'] = $audioName;
         }
        
-        //$result['user_id']=$user->id;
-        $result['user_id']=1;
+        $result['user_id']=$user->id;
+        // $result['user_id']=1;
         //so'zni create qilish
         $created_word=Word::create($result);
         $word=Word::find($created_word->id);

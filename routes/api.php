@@ -50,30 +50,6 @@ Route::get('check',[AuthController::class,'check']);
 Route::post('admins',[AuthController::class,'createAdmin']);
 Route::delete('admins/{id}',[AuthController::class,'deleteAdmin']);
 
-// //categories
-// Route::get('categoriesdate',[CategoryController::class,'sortDate']);
-// Route::post('categories',[CategoryController::class,'store']);
-// Route::put('categories/{id}',[CategoryController::class,'update']);
-// Route::delete('categories/{id}',[CategoryController::class,'destroy']);
-
-// //Word
-// Route::get('wordsdate',[WordController::class,'sortDate']);
-// Route::post('words',[WordController::class,'store']);
-// Route::put('words/{id}',[WordController::class,'update']);
-// Route::delete('words/{id}',[WordController::class,'destroy']);
-
-// //Search
-// Route::get('searches',[SearchController::class,'index']);
-// Route::delete('searches/{id}',[SearchController::class,'destroy']);
-
-});
-// //auth    
-// Route::post('logout',[AuthController::class,'logout']);
-// Route::get('check',[AuthController::class,'check']);
-// //admin create and delete
-// Route::post('admins',[AuthController::class,'createAdmin']);
-// Route::delete('admins/{id}',[AuthController::class,'deleteAdmin']);
-
 //categories
 Route::get('categoriesdate',[CategoryController::class,'sortDate']);
 Route::post('categories',[CategoryController::class,'store']);
@@ -83,11 +59,14 @@ Route::delete('categories/{id}',[CategoryController::class,'destroy']);
 //Word
 Route::get('wordsdate',[WordController::class,'sortDate']);
 Route::post('words',[WordController::class,'store']);
-Route::post('words/{id}',[WordController::class,'update']);
+Route::put('words/{id}',[WordController::class,'update']);
 Route::delete('words/{id}',[WordController::class,'destroy']);
 
 //Search
 Route::get('searches',[SearchController::class,'index']);
 Route::delete('searches/{id}',[SearchController::class,'destroy']);
+
+});
+
 
 
