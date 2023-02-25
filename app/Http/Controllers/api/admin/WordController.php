@@ -221,7 +221,6 @@ class WordController extends Controller
         //         "categories_id."."$key" =>'exists:categories,id'
         //     ]);
         // }
-
             $audio=Word::find(intval($request->id));
             if(isset($audio)){
                 //audio bor yo'qligini tekshirish
