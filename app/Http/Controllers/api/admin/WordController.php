@@ -46,10 +46,6 @@ class WordController extends Controller
             $query
             ->whereRaw("latin LIKE '%". $search . "%'")
             ->orWhereRaw("kiril LIKE '%". $search . "%'");
-            if($search!="")
-                Search::create([
-                    'word_name' => $search
-                ]);
             
         }
         elseif($search=$request->input('letter')){

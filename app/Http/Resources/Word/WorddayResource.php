@@ -20,6 +20,8 @@ class WorddayResource extends JsonResource
             'kiril'=>$this->kiril,
             'description_latin'=>$this->description_latin,
             'description_kiril'=>$this->description_kiril,
+            'example_latin'=>$this->example_latin,
+            'example_kiril'=>$this->example_kiril,
             'audio'=>$this->audio,
             'created_at'=>$this->created_at,
             'categories'=>WordCategoryResource::collection($this->categories),

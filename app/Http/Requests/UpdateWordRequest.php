@@ -29,6 +29,8 @@ class UpdateWordRequest extends FormRequest
             'kiril'=>'string',
             'description_latin'=>'string',
             'description_kiril'=>'string',
+            'example_latin'=>'nullable|string',
+            'example_kiril'=>'nullable|string',
             'audio'=> 'nullable|mimes:ogg,mp3,wav|max:10000',
         ];
     }

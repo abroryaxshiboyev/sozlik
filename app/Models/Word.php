@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Word extends Model
 {
     use HasFactory, SoftDeletes;
-    protected $fillable=['user_id','latin','kiril','description_latin','description_kiril','audio','count'];
+    protected $fillable=['user_id','latin','kiril','description_latin','description_kiril','audio','count','example_latin','example_kiril'];
 
     public function categories()
     {

@@ -29,6 +29,8 @@ class StoreWordRequest extends FormRequest
             'kiril'=>'required|unique:words,kiril',
             'description_latin'=>'required',
             'description_kiril'=>'required',
+            'example_latin'=>'nullable|string',
+            'example_kiril'=>'nullable|string',
             'audio'=> 'nullable|mimes:ogg,mp3,wav|max:10000'
         ];
     }
