@@ -20,6 +20,21 @@ use Illuminate\Http\Request;
 
 class WordController extends Controller
 {
+    function latin_to_cyrillic($kirilstring) {
+        $cyr = [
+            'ч','ш','ю','я','а','б','в','г','д','е','ё','ж','з','и','й','к','л','м','н','о','п',
+            'р','с','т','у','ф','х','ц','ы','э','ә','ғ','қ','ҳ','ң','ө','ү','ў',
+            'Ч','Ш','Ю','Я','А','Б','В','Г','Д','Е','Ё','Ж','З','И','Й','К','Л','М','Н','О','П',
+            'Р','С','Т','У','Ф','Х','Ц','Ы','Э','Ә','Ғ','Қ','Ҳ','Ң','Ө','Ү','Ў',
+               ];
+        $lat = [
+            'ch','sh','yu','ya','a','b','v','g','d','ye','yo','j','z','i','y','k','l','m','n','o','p',
+            'r','s','t','u','f','x','c','ı','e','á','ǵ','q','h','ń','ó','ú','w',
+            'Ch','Sh','Yu','Ya','A','B','V','G','D','Ye','Yo','J','Z','I','Y','K','L','M','N','O','P',
+            'R','S','T','U','F','X','C','Í','E','Á','Ǵ','Q','H','Ó','Ú','W',
+        ];
+        return str_replace($lat, $cyr, $kirilstring);
+    }
     ///Abror Yaxshiboyev
     /**
      * Display a listing of the resource.
@@ -43,6 +58,7 @@ class WordController extends Controller
         $query = Word::query();
 
         if($search = $request->input('search')){
+            $search=$this->latin_to_cyrillic($search);
             $query
             ->whereRaw("latin LIKE '%". $search . "%'")
             ->orWhereRaw("kiril LIKE '%". $search . "%'");
