@@ -56,8 +56,8 @@ class SearchController extends Controller
         if($search = $request->input('search')){
             $search=$this->latin_to_cyrillic($search);
             $query
-            ->whereRaw("latin LIKE '%". $search . "%'")
-            ->orWhereRaw("kiril LIKE '%". $search . "%'");    
+            ->whereRaw("latin LIKE '". $search . "%'")
+            ->orWhereRaw("kiril LIKE '". $search . "%'");    
         }
         elseif($search=$request->input('letter')){
             $query
